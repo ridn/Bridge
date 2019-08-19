@@ -1,0 +1,39 @@
+.root { 
+	-fx-background-color:radial-gradient(focus-angle 45deg, focus-distance 10%, center 50% 50%, radius 60%, #00b700 22%, green 60%, darkgreen 77%);
+	-fx-background-image: url("http://api.thumbr.it/whitenoise-361x370.png?background=ffffff00&noise=33333&density=70&opacity=20");
+	 //-fx-background-color:radial-gradient(radius 100%, green, darkgray, black);
+
+	-fx-background-size:16px 16px;
+}
+#centerButtons {
+	-fx-background-color: linear-gradient(to bottom, #EAEAEA, #D8D8D8);
+	-fx-effect: dropshadow( gaussian , rgba(0,0,0,.5) , 3,0,0,0 );
+	-fx-border-width:1;
+	-fx-border-color: #B5B5B5;
+	-fx-border-radius: 5 ;
+	-fx-background-radius: 5;
+
+}
+#centerButtons: pressed {
+	-fx-background-color: linear-gradient(to bottom, #D8D8D8, #EAEAEA);
+   -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );
+
+}
+#centerButtons: hover {
+	-fx-background-color: linear-gradient(to bottom, #D8D8D8, #EAEAEA);
+
+}
+#playerLabel {
+	-fx-effect: dropshadow( gaussian , rgba(100,130,100,.5) , 0,0,0,1 );
+
+}
+.button {
+	//-fx-border-radius: 5 , 5 , 5;
+	-fx-border-width:0;
+	//-fx-background-radius: 22,22,22;
+	-fx-background-color: transparent;
+	-fx-effect: dropshadow( gaussian , rgba(0,24,22,.6) , 2,0,0,.5 );
+}
+#card-image {
+	-fx-background-radius: 5;
+}

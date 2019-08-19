@@ -1,0 +1,74 @@
+package Bridge;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Random;
+
+public class Player {
+	boolean isAI;
+	String name;
+	Game game;
+	int playerNumber;
+	ArrayList<Card> hand = new ArrayList<Card>();
+	Player(String name, Game game, boolean isAI){
+		game.addPlayer(this);
+		this.playerNumber = game.getNumberOfPlayers();
+		this.name = name;
+		this.game = game;
+		this.isAI = isAI;
+	}
+	public void addCardToHand(Card c){
+		this.hand.add(c);
+		if(hand.size() > 1)sort();
+	}
+	public void sort(){
+		for(int i = 0; i < hand.size()-1; i++)
+			for(int j = 1; j < hand.size(); j++)
+				if(hand.get(j-1).value > hand.get(j).value)
+					Collections.swap(hand, j-1, j);
+		for(int i = 0; i < hand.size()-1; i++)
+			for(int j = 1; j < hand.size(); j++)
+				if(hand.get(j-1).suit.ordinal() > hand.get(j).suit.ordinal())
+					Collections.swap(hand, j-1, j);
+	}
+	public Card playCardAtIndex(int index){
+		Card c = hand.get(index);
+		hand.remove(index);
+		return c;
+	}
+	public Card bestChoiceCard(Card playedCard,Card lastCard){
+		Card highestCard = new Card(0,Card.Suit.CLUBS);
+		Card trickWinningCard = new Card(0,Card.Suit.CLUBS);
+
+		Random random = new Random();
+		boolean failedToFindSuit = true;
+		int index = 0;
+		if(playedCard != null)
+		for(int i = 0; i < hand.size(); i++)
+			if(hand.get(i).suit == playedCard.suit){
+				failedToFindSuit = false;
+				if(hand.get(i).value > highestCard.value){
+					highestCard = hand.get(i);
+					index = i;
+				}
+			}
+		if(index > 0)highestCard = playCardAtIndex(index);
+
+		if(game.isFirstCardOfTrick() || failedToFindSuit){
+			highestCard = playCardAtIndex(random.nextInt(hand.size()-1));
+		}
+		if(game.isFirstCardOfTrick())game.setTrickWinner(this);
+//		for(int i = 0; i < game.getTrickSize(); i++)
+		
+		if(highestCard != null && highestCard.value > trickWinningCard.value) {
+			game.setTrickWinner(this);
+			trickWinningCard = highestCard;
+		}
+		
+		return highestCard;
+	}
+
+	public String toString() {
+	        return "Player "+ playerNumber + (isAI ? " (bot)" : "") + " : " + name + "\nHand: " + ((!hand.isEmpty()) ? hand.toString() : "Empty");
+	 }
+}

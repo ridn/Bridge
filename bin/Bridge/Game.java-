@@ -1,0 +1,43 @@
+package Bridge;
+
+import java.util.ArrayList;
+
+public class Game {
+	private ArrayList<Player> playerList = new ArrayList<Player>();
+	private ArrayList<Card> trick = new ArrayList<Card>();
+	private Player trickWinner;
+	Game(){
+		
+	}
+	public void addPlayer(Player player){
+		this.playerList.add(player);
+	}
+	public int getNumberOfPlayers(){
+		return playerList.size();
+	}
+	public Player playerWithNumber(int number){
+		return playerList.get(number-1);
+	}
+	public boolean isFirstCardOfTrick(){
+		return (trick.size() <= 0);
+	}
+	public Player getTrickWinner() {
+		return trickWinner;
+	}
+	public void setTrickWinner(Player trickWinner) {
+		this.trickWinner = trickWinner;
+	}
+	public int getTrickSize() {
+		return trick.size();
+	}
+	public void playTurn(){
+		for(int i = 0; i < getNumberOfPlayers(); i++)
+			if(isFirstCardOfTrick())
+				trick.add(playerList.get(i).bestChoiceCard(null,null));
+			else
+				trick.add(playerList.get(i).bestChoiceCard(trick.get(0),trick.get(trick.size()-1)));
+
+		System.out.println("Trick: " + trick.toString() + "\nWinner: " + getTrickWinner().name);
+	}
+	
+}
